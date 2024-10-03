@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { adminSignInStart, adminSignInSuccess, adminSignInFailure } from '../redux/admin/adminSlice';
+// import { adminSignInStart, adminSignInSuccess, adminSignInFailure } from '../redux/admin/adminSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function AdminLogin() {
   const [formData, setFormData] = useState({ email: '', password: '' });
-  const { loading, error } = useSelector((state) => state.admin);
+  // const { loading, error } = useSelector((state) => state.admin);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -16,7 +16,7 @@ export default function AdminLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault(); 
     try {
-      dispatch(adminSignInStart());
+      // dispatch(adminSignInStart());
       const res = await fetch('/api/admin/login', {
         method: 'POST',
         headers: {
@@ -27,15 +27,15 @@ export default function AdminLogin() {
       const data = await res.json();
       
       if (data.success === false) {
-        dispatch(adminSignInFailure(data));
+        // dispatch(adminSignInFailure(data));
         return;
       }
   
-      dispatch(adminSignInSuccess({ user: data.user, isAdmin: data.isAdmin }));
-      navigate('/admin/dashboard'); 
+      // dispatch(adminSignInSuccess({ user: data.user, isAdmin: data.isAdmin }));
+      navigate('/admin/'); 
   
     } catch (error) {
-      dispatch(adminSignInFailure(error));
+      // dispatch(adminSignInFailure(error));
     }
   };
   
@@ -63,14 +63,14 @@ export default function AdminLogin() {
           required
         />
         <button
-          disabled={loading}
+          // disabled={loading}
           className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
-        >
-          {loading ? 'Loading...' : 'Sign In'}
+        >Sign in 
+          {/* {loading ? 'Loading...' : 'Sign In'} */}
         </button>
       </form>
       
-      {error && <p className='text-red-700 mt-5'>{error}</p>}
+      {/* {error && <p className='text-red-700 mt-5'>{error}</p>} */}
     </div>
   );
 }
