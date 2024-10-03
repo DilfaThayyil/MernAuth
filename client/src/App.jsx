@@ -9,6 +9,8 @@ import Header from './components/Header';
 import PrivateRoute from './components/PrivateRoute';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
+import UsersList from './pages/UsersList';
+
 
 const ConditionalHeader = () => {
   const location = useLocation();
@@ -33,6 +35,7 @@ export default function App() {
         <Route path="/admin">
           <Route path="login" element={<AdminLogin />} />
           <Route path="" element={<AdminDashboard />} />
+          <Route path="users" element={<UsersList/>}/>
         </Route>
       </Routes>
     </BrowserRouter>
