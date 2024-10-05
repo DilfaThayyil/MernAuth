@@ -6,6 +6,7 @@ import authRoutes from './routes/auth.route.js'
 import adminRoutes from './routes/admin.route.js'
 import cookieParser from 'cookie-parser'
 import path from 'path'
+import cors from 'cors';
 dotenv.config()
 
 
@@ -21,15 +22,17 @@ const _dirname = path.resolve()
 
 const app = express();
 
-app.use(express.static(path.join(_dirname,'/client/dist')))
+app.use(express.static(path.join(_dirname,'client')))
 
 app.get('*',(req,res)=>{
-  res.sendFile(path.join(_dirname,'client','dist','index.html'))
+  res.sendFile(path.join(_dirname,'client','index.html'))
 })
 
 app.use(express.json());
 
 app.use(cookieParser())
+
+app.use(cors());
 
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);

@@ -9,6 +9,8 @@ import Header from './components/Header';
 import PrivateRoute from './components/PrivateRoute';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const ConditionalHeader = () => {
@@ -36,6 +38,7 @@ export default function App() {
           <Route path="" element={<AdminDashboard />} />
         </Route>
       </Routes>
+      <ToastContainer/>
     </BrowserRouter>
   );
 }

@@ -17,19 +17,50 @@ export const login = async (req, res) => {
 export const getUsers = async(req,res)=>{
   try{
     const users = await User.find()
-    console.log(users)
-    console.log('jhksjhfs')
+    console.log('users ==>> : ',users)
     res.json({userData:users})
   }catch(err){
     console.log(err)
+    res.status(500).json({message: 'Error fetching users'})
+  }
+}
+
+
+export const updateuser = async(req,res)=>{
+  try{
+    const userId = req.params.id
+    const {username,email} = req.body
+    const existingUser = await User.findOne({email,_id:{$ne: userId}})
+    if(existingUser){
+      return res.json({already : 'Email already exists'})
+    }
+    const user = await User.findById(userId)
+    if(!user){
+      return res.json({already : 'User not found'})
+    }
+
+    user.username = username
+    user.email = email
+    await user.save()
+
+    res.status(200).json({message: 'User updated successfully',user})
+  }catch(err){
+    console.log(err)
+    res.status(500).json({message : 'Server error'})
   }
 }
 
 
 export const deleteUser = async(req,res)=>{
   try{
-
+    const userId = req.params.id
+    const deletedUser = await User.findByIdAndDelete(userId)
+    if(!deletedUser){
+      return res.status(404).json({message: 'User not found'})
+    }
+    res.json({message:'User deleted successfully'})
   }catch(err){
     console.log(err)
+    res.status(500).json({message: 'Error deleting user'})
   }
 }
