@@ -52,7 +52,7 @@
     left: 0.75rem;
     transition: 0.2s ease all;
     pointer-events: none;
-    color: #6c757d; /* Light gray */
+    color: #6c757d;
 }
 
 .form-outline input {
@@ -65,13 +65,12 @@
     top: -0.5rem;
     left: 0.75rem;
     font-size: 0.75rem;
-    color: #ff69b4; /* Pink color when focused */
+    color: #ff69b4;
 }
 
-/* Renamed container to admin-login-container to avoid Bootstrap conflicts */
 .admin-login-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Ensure it's centered vertically */
+    height: 100vh; 
 }
