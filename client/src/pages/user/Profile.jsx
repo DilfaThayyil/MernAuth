@@ -1,6 +1,6 @@
 import React, { useRef,useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { app } from '../firebase'
+import { app } from '../../firebase'
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage'
 import { useDispatch } from 'react-redux'
 import { updateUserStart,
@@ -10,7 +10,7 @@ import { updateUserStart,
   deleteUserSuccess,
   deleteUserFailure,
   signOut
- } from '../redux/user/userSlice'
+ } from '../../redux/user/userSlice'
 
 
 export default function Profile() {

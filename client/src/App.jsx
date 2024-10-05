@@ -1,15 +1,14 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import Home from './pages/Home';
-import About from './pages/About';
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
-import Profile from './pages/Profile';
+import Home from './pages/user/Home';
+import About from './pages/user/About';
+import SignIn from './pages/user/SignIn';
+import SignUp from './pages/user/SignUp';
+import Profile from './pages/user/Profile';
 import Header from './components/Header';
 import PrivateRoute from './components/PrivateRoute';
-import AdminLogin from './pages/AdminLogin';
-import AdminDashboard from './pages/AdminDashboard';
-import UsersList from './pages/UsersList';
+import AdminLogin from './pages/admin/AdminLogin';
+import AdminDashboard from './pages/admin/AdminDashboard';
 
 
 const ConditionalHeader = () => {
@@ -35,7 +34,6 @@ export default function App() {
         <Route path="/admin">
           <Route path="login" element={<AdminLogin />} />
           <Route path="" element={<AdminDashboard />} />
-          <Route path="users" element={<UsersList/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

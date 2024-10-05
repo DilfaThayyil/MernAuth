@@ -1,3 +1,5 @@
+import User from "../models/user.model.js";
+
 export const login = async (req, res) => {
     const { email, password } = req.body;
   
@@ -11,3 +13,23 @@ export const login = async (req, res) => {
     }
   };
   
+
+export const getUsers = async(req,res)=>{
+  try{
+    const users = await User.find()
+    console.log(users)
+    console.log('jhksjhfs')
+    res.json({userData:users})
+  }catch(err){
+    console.log(err)
+  }
+}
+
+
+export const deleteUser = async(req,res)=>{
+  try{
+
+  }catch(err){
+    console.log(err)
+  }
+}
