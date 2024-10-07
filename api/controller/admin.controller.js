@@ -1,3 +1,4 @@
+import bcryptjs from "bcryptjs";
 import User from "../models/user.model.js";
 
 export const login = async (req, res) => {
@@ -29,7 +30,8 @@ export const getUsers = async(req,res)=>{
 export const updateuser = async(req,res)=>{
   try{
     const userId = req.params.id
-    const {username,email} = req.body
+    const {username,email,password} = req.body
+    const hashedPassword = bcryptjs.hashSync(password,10)
     const existingUser = await User.findOne({email,_id:{$ne: userId}})
     if(existingUser){
       return res.json({already : 'Email already exists'})
@@ -41,6 +43,7 @@ export const updateuser = async(req,res)=>{
 
     user.username = username
     user.email = email
+    user.password = hashedPassword  
     await user.save()
 
     res.status(200).json({message: 'User updated successfully',user})

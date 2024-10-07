@@ -38,7 +38,6 @@ export default function App() {
           <Route path="" element={<AdminDashboard />} />
         </Route>
       </Routes>
-      <ToastContainer/>
     </BrowserRouter>
   );
 }

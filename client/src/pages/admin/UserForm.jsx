@@ -4,23 +4,23 @@ import React, { useState, useEffect } from 'react';
 export default function UserForm({ onSubmit, onClose, user }) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
-  const [profilePicture, setProfilePicture] = useState('');
+  const [password, setPassword] = useState('')
 
   useEffect(() => {
     if (user) {
       setUsername(user.username || '');
       setEmail(user.email || '');
-      setProfilePicture(user.profilePicture || '');
+      setPassword(user.password || '')
     } else {
       setUsername('');
       setEmail('');
-      setProfilePicture('');
+      setPassword('')
     }
   }, [user]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ username, email, profilePicture });
+    onSubmit({ username, email, password });
   };
 
   return (
@@ -46,11 +46,12 @@ export default function UserForm({ onSubmit, onClose, user }) {
         />
       </div>
       <div className="mb-4">
-        <label className="block text-sm font-medium mb-2">Profile Picture URL</label>
+        <label className="block text-sm font-medium mb-2">Password</label>
         <input 
           type="text" 
-          value={profilePicture} 
-          onChange={(e) => setProfilePicture(e.target.value)} 
+          
+          onChange={(e) => setPassword(e.target.value)} 
+          required 
           className="border rounded w-full px-3 py-2"
         />
       </div>
