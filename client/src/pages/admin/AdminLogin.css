@@ -1,55 +1,77 @@
+/* Background gradient */
 .gradient-custom-girlish {
-    background: linear-gradient(135deg, rgba(255, 182, 193, 0.8) 0%, rgba(219, 112, 147, 0.8) 100%);
+    background: linear-gradient(135deg, rgba(240, 248, 255, 0.9) 0%, rgba(255, 182, 193, 0.9) 100%);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
 
+/* Card styling */
 .girlish-card {
     border: none;
-    background: #fdf5f8;
-    box-shadow: 0px 8px 20px rgba(240, 128, 128, 0.2);
-    max-width: 400px;
+    background: #fff0f5;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 550px; /* Increase the card width */
     width: 100%;
     margin: 0 auto;
+    padding: 40px; /* Increase padding */
+    border-radius: 20px; /* Softer rounded corners */
 }
 
+/* Heading styling */
 .girlish-heading {
     color: #ff69b4;
-    letter-spacing: 1.5px;
+    letter-spacing: 2px;
+    font-size: 2.5rem; /* Larger heading */
+    margin-bottom: 30px;
 }
 
+/* Form input styling */
 .form-pink .form-control {
     border: 2px solid #ff69b4;
-    border-radius: 10px;
-    padding: 10px;
+    border-radius: 12px; /* Softer radius */
+    padding: 15px; /* Larger padding */
     color: #333;
+    font-size: 1.1rem; /* Larger text */
+    background-color: #fffafc; /* Soft background color */
 }
 
+/* Input focus styling */
 .girlish-input:focus {
     border-color: #ff69b4 !important;
-    box-shadow: 0 0 10px #ff69b4 !important;
+    box-shadow: 0 0 12px #ff69b4 !important;
+    outline: none;
 }
 
+/* Button styling */
 .btn-girlish {
     background-color: #ff69b4;
     color: white;
-    border-radius: 25px;
-    padding: 10px 30px;
+    border-radius: 30px; /* Larger radius for a softer look */
+    padding: 12px 40px; /* Bigger button */
+    font-size: 1.2rem;
     transition: all 0.3s ease;
+    margin-top: 20px;
 }
 
 .btn-girlish:hover {
     background-color: #ff1493;
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 20, 147, 0.3);
 }
 
+/* Label floating effect */
 .form-outline {
     position: relative;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .form-outline label {
     position: absolute;
-    top: 0.75rem;
-    left: 0.75rem;
+    top: 1rem;
+    left: 1rem;
     transition: 0.2s ease all;
     pointer-events: none;
     color: #6c757d;
@@ -57,20 +79,32 @@
 
 .form-outline input {
     padding-top: 1.5rem;
-    padding-left: 0.75rem;
+    padding-left: 1rem;
 }
 
 .form-outline input:focus + label,
 .form-outline input:not(:placeholder-shown) + label {
-    top: -0.5rem;
-    left: 0.75rem;
-    font-size: 0.75rem;
+    top: -0.75rem;
+    left: 1rem;
+    font-size: 0.85rem;
     color: #ff69b4;
 }
 
+/* Admin login container */
 .admin-login-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh; 
+}
+
+/* Success and error message styling */
+.text-danger {
+    color: #dc3545;
+    font-size: 1.1rem;
+}
+
+.text-success {
+    color: #28a745;
+    font-size: 1.1rem;
 }

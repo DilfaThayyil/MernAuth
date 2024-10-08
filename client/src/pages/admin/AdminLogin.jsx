@@ -47,7 +47,7 @@ function AdminLogin() {
             } else if (response.data.success) {
                 setIsError(false); 
                 localStorage.setItem('admintoken', response.data.token);
-                navigate('/admin');
+                navigate(`${url}admin/`);
             }
         } catch (error) {
             console.error(error);
