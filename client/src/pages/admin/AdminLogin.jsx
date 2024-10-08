@@ -47,14 +47,15 @@ function AdminLogin() {
             } else if (response.data.success) {
                 setIsError(false); 
                 localStorage.setItem('admintoken', response.data.token);
-                navigate(`${url}admin/`);
+                console.log("Login successfull , navigating into dashboard")
+                navigate('/admin');
             }
         } catch (error) {
             console.error(error);
             setMessage('Login failed. Please check your credentials.');
             setIsError(true);
         }
-    };
+    }; 
 
     return (
         <section className="vh-100 gradient-custom-girlish">

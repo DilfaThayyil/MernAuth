@@ -11,6 +11,8 @@ import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PublicRoute from './components/PublicRoute';
+import AdminRoute from './components/AdminRoute';
 
 
 const ConditionalHeader = () => {
@@ -26,16 +28,20 @@ export default function App() {
     <BrowserRouter>
       <ConditionalHeader />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/sign-up" element={<SignUp />} />
+        <Route element={<PublicRoute/>}>
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/sign-up" element={<SignUp />} />
+        </Route>
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
         </Route>
         <Route path="/admin">
           <Route path="login" element={<AdminLogin />} />
-          <Route path="" element={<AdminDashboard />} />
+          <Route element={<AdminRoute/>}>
+            <Route path="" element={<AdminDashboard />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
