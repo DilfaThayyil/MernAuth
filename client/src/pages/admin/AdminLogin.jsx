@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminLogin.css';
 
-const url = `http://localhost:3000/`;
+const url = `http://localhost:3000/api/`;
 
 function AdminLogin() {
     const [email, setEmail] = useState('');
@@ -39,13 +39,13 @@ function AdminLogin() {
         };
 
         try {
-            const response = await axios.post(`${url}/login`, adminData);
+            const response = await axios.post(`${url}admin/login`, adminData);
 
             if (response.data.message) {
                 setIsError(true);
                 setMessage(response.data.message);
             } else if (response.data.success) {
-                setIsError(false);
+                setIsError(false); 
                 localStorage.setItem('admintoken', response.data.token);
                 navigate('/admin');
             }
