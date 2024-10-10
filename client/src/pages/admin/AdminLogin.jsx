@@ -40,22 +40,24 @@ function AdminLogin() {
 
         try {
             const response = await axios.post(`${url}admin/login`, adminData);
-
-            if (response.data.message) {
+            
+            if (response.data.success!=true) {
                 setIsError(true);
                 setMessage(response.data.message);
             } else if (response.data.success) {
-                setIsError(false); 
+                setIsError(false);
+                console.log(response.data)
+ 
                 localStorage.setItem('admintoken', response.data.token);
                 console.log("Login successfull , navigating into dashboard")
-                navigate('/admin');
+                navigate('/admin/');
             }
         } catch (error) {
             console.error(error);
             setMessage('Login failed. Please check your credentials.');
             setIsError(true);
         }
-    }; 
+    };
 
     return (
         <section className="vh-100 gradient-custom-girlish">
