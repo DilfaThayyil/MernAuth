@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import {Link,useNavigate} from 'react-router-dom'
 import OAuth from '../../components/OAuth'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from 'yup'
 
 
 export default function SignUp() {
@@ -11,6 +14,30 @@ export default function SignUp() {
   const handleChange = (e)=>{
     setFormData({...formData,[e.target.id]: e.target.value})
   }
+
+
+  const validationSchema = Yup.object().shape({
+    username: Yup.string()
+      .required('Username is required')
+      .min(3, 'Username must be at least 3 characters'),
+    email: Yup.string()
+      .required('Email is required')
+      .email('Email is invalid'),
+    password: Yup.string()
+      .required('Password is required')
+      .min(8, 'Password must be at least 8 characters')
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        'Password must contain one uppercase letter, one lowercase letter, one number, and one special character'
+      ),
+  });
+
+  const {
+    register,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault(); 
@@ -42,9 +69,16 @@ export default function SignUp() {
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl text-center font-semibold my-7'>Sign Up</h1>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
-        <input type="text" placeholder='Username' id='username' className='bg-slate-100 p-3 rounded-lg' onChange={handleChange}/>
-        <input type="email" placeholder='Email' id='email' className='bg-slate-100 p-3 rounded-lg' onChange={handleChange}/>
-        <input type="password" placeholder='Password' id='password' className='bg-slate-100 p-3 rounded-lg' onChange={handleChange}/>
+        <input type="text" placeholder='Username' id='username' className='bg-slate-100 p-3 rounded-lg' {...register('username')} onChange={handleChange}/>
+        {errors.username && (
+          <p className="text-red-500">{errors.username.message}</p>
+        )}
+        <input type="email" placeholder='Email' id='email' className='bg-slate-100 p-3 rounded-lg' {...register('email')} onChange={handleChange}/>
+        {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+        <input type="password" placeholder='Password' id='password' className='bg-slate-100 p-3 rounded-lg' {...register('password')} onChange={handleChange}/>
+        {errors.password && (
+          <p className="text-red-500">{errors.password.message}</p>
+        )}
         <button disabled={loading} className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>
           {loading ? 'Loading...' : 'Sign Up'}
         </button>
