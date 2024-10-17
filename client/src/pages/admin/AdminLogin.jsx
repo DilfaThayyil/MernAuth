@@ -40,18 +40,20 @@ function AdminLogin() {
 
         try {
             const response = await axios.post(`${url}admin/login`, adminData);
-            
-            if (response.data.success!=true) {
-                setIsError(true);
-                setMessage(response.data.message);
-            } else if (response.data.success) {
+
+            if (response.data.success) {
                 setIsError(false);
                 console.log(response.data)
  
                 localStorage.setItem('admintoken', response.data.token);
                 console.log("Login successfull , navigating into dashboard")
                 navigate('/admin/');
+            
+            } else if (response.data.success!=true) {
+                setIsError(true);
+                setMessage(response.data.message);
             }
+            
         } catch (error) {
             console.error(error);
             setMessage('Login failed. Please check your credentials.');

@@ -8,6 +8,7 @@ import OAuth from '../../components/OAuth'
 
 export default function SignIn() {
   const [formData,setFormData] = useState({})
+  const [successMessage,setSuccessMessage] = useState("")
   const {loading,error} = useSelector((state)=>state.user)
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -15,8 +16,27 @@ export default function SignIn() {
     setFormData({...formData,[e.target.id]: e.target.value})
   }
 
+  const validateEmail = (email) => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  };
+
+  const validatePassword = (password) => {
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    return passwordPattern.test(password);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault(); 
+
+    if (!validateEmail(formData.email)) {
+      return dispatch(signInFailure({ message: 'Invalid email format' }));
+    }
+
+    if (!validatePassword(formData.password)) {
+      return dispatch(signInFailure({ message: 'Password must be at least 8 characters long and include one uppercase letter, one lowercase letter, one digit, and one special character.' }));
+    }
+
     try {
       dispatch(signInStart())
       const res = await fetch('/api/auth/signin', {
@@ -32,7 +52,10 @@ export default function SignIn() {
         return
       }
       dispatch(signInSuccess(data))
-      navigate('/')
+      setSuccessMessage("User successfully signed in!")
+      setTimeout(() => {
+        navigate('/');
+    }, 2000)
     } catch (error) {
       dispatch(signInFailure(error))
     }
@@ -57,6 +80,9 @@ export default function SignIn() {
         </Link>
       </div>
       <p className='text-red-700 mt-5'>{error ? error.message ||'Something went wrong!' : ''}</p>
+      {successMessage && (
+        <p className='text-green-700 mt-5'>{successMessage}</p> // Display success message
+      )}
     </div>
   )
 }

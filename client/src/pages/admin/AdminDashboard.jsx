@@ -16,13 +16,24 @@ export default function AdminDashboard() {
   const [error, setError] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [successMessage,setSuccessMessage] = useState('')
   const navigate = useNavigate();
 
 
   useEffect(() => {
-    console.log('AdminDashboard mounted');
     fetchUserData();
   }, []);
+
+  useEffect(() => {
+    if (successMessage) {
+      const timer = setTimeout(() => {
+        setSuccessMessage('');
+      }, 3000); 
+
+      return () => clearTimeout(timer); 
+    }
+  }, [successMessage]);
+
   
   const fetchUserData = async () => {
     try {
@@ -70,6 +81,7 @@ export default function AdminDashboard() {
   const handleOpenModal = (user = null) => {
     setCurrentUser(user);
     setModalOpen(true);
+    setSuccessMessage('')
   };
 
   const handleCloseModal = () => {
@@ -85,13 +97,15 @@ export default function AdminDashboard() {
             Authorization: `Bearer ${localStorage.getItem('admintoken')}`,
           },
         });
+        setSuccessMessage('User updated successfully')
         toast.success('User updated successfully!');
       } else {
-        await axios.post(`${url}/api/auth/signup`, user, {
+        await axios.post(`${url}/api/admin/createUsers`, user, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('admintoken')}`,
           },
         });
+        setSuccessMessage('User created successfully')
         toast.success('User created successfully!');
       }
       fetchUserData();
@@ -110,6 +124,12 @@ export default function AdminDashboard() {
           Logout
         </button>
       </div>
+
+      {successMessage && (
+        <div className="mb-4 p-2 text-green-600 bg-green-100 rounded">
+          {successMessage}
+        </div>
+      )}
 
       {error && <p className="text-red-600">{error}</p>}
 
@@ -170,7 +190,7 @@ export default function AdminDashboard() {
         <UserForm 
           onSubmit={handleSubmit} 
           onClose={handleCloseModal} 
-          user={currentUser} 
+          user={currentUser}
         />
       </Modal>
     </div>

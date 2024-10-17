@@ -21,8 +21,10 @@ export default function Profile() {
   const [imageError,setImageError] = useState(false)
   const [formData,setFormData] = useState({})
   const [updateSuccess,setUpdateSuccess] = useState(false)
-
+  const [passwordError,setPasswordError] = useState('')
   const {currentUser,loading,error} = useSelector((state) => state.user)
+  
+
   useEffect(()=>{
     if(image){
       handleFileUpload(image)
@@ -55,8 +57,20 @@ export default function Profile() {
     setFormData({...formData,[e.target.id]:e.target.value})
   }
 
+  const validatePassword = (password) => {
+    const passwordCriteria = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+    return passwordCriteria.test(password)
+  }
+
   const handleSubmit = async(e)=>{
     e.preventDefault()
+    const password = formData.password
+    setPasswordError('')
+    if (password && !validatePassword(password)) {
+      setPasswordError('Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.');
+      return;
+    }
+
     try{
       dispatch(updateUserStart())
       const res = await fetch(`/api/user/update/${currentUser._id}`,{
@@ -73,6 +87,9 @@ export default function Profile() {
       }
       dispatch(updateUserSuccess(data))
       setUpdateSuccess(true)
+      setTimeout(()=>{
+        setUpdateSuccess(false)
+      },2000)
     }catch(error){
       dispatch(updateUserFailure(error))
     }
@@ -122,9 +139,10 @@ export default function Profile() {
             ''
           )}
         </p>
-        <input defaultValue={currentUser.username} type="text" id='username' placeholder='Username' className='bg-slate-100 rounded-lg p-3' onChange={handleChange} />
-        <input defaultValue={currentUser.email} type="email" id='email' placeholder='Email' className='bg-slate-100 rounded-lg p-3' onChange={handleChange}/>
-        <input type="password" id='password' placeholder='Password' className='bg-slate-100 rounded-lg p-3'/>
+        <input defaultValue={currentUser.username} type="text" id='username' placeholder='Username' className='bg-slate-100 rounded-lg p-3' disabled/>
+        <input defaultValue={currentUser.email} type="email" id='email' placeholder='Email' className='bg-slate-100 rounded-lg p-3' disabled/>
+        <input type="password" id='password' placeholder='Password' className='bg-slate-100 rounded-lg p-3' onChange={handleChange}/>
+        {passwordError && <p className='text-red-700'>{passwordError}</p>}
         <button className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>
           {loading ? 'Loading...' : 'Update'}
         </button>

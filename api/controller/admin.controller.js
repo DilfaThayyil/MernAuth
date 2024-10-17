@@ -1,6 +1,5 @@
 import bcryptjs from "bcryptjs";
 import User from "../models/user.model.js";
-import jwt from 'jsonwebtoken'
 
 export const login = async (req, res) => {
     const { email, password } = req.body;
@@ -27,11 +26,23 @@ export const getUsers = async(req,res)=>{
   }
 }
 
+export const createUsers = async (req, res, next) => { 
+  try {
+    const { username, email, password, profilePicture } = req.body;
+    const hashedPassword = bcryptjs.hashSync(password, 10);
+    const newUser = new User({ username, email, password: hashedPassword,profilePicture});
+    await newUser.save();
+    res.status(201).json({ success: true, message: "User created successfully!" });
+  } catch (error) {
+    next(error); 
+  }
+};
+
 
 export const updateuser = async(req,res)=>{
   try{
     const userId = req.params.id
-    const {username,email,password} = req.body
+    const {username,email,password,profilePicture} = req.body
     const hashedPassword = bcryptjs.hashSync(password,10)
     const existingUser = await User.findOne({email,_id:{$ne: userId}})
     if(existingUser){
@@ -45,6 +56,7 @@ export const updateuser = async(req,res)=>{
     user.username = username
     user.email = email
     user.password = hashedPassword  
+    user.profilePicture = profilePicture
     await user.save()
 
     res.status(200).json({message: 'User updated successfully',user})
