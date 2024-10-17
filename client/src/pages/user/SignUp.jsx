@@ -19,7 +19,7 @@ export default function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors({}); // Clear previous errors
+    setErrors({}); 
     setSuccessMessage('')
     try {
       setLoading(true);
