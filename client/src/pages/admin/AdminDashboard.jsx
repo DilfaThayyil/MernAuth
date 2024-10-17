@@ -4,8 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from './Modal'; 
-import UserForm from './UserForm'; 
+import UserForm from './UserForm';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
+const MySwal = withReactContent(Swal)
 
 
 
@@ -51,26 +54,50 @@ export default function AdminDashboard() {
     }
   };
   
-
-
-
+  
   const handleDeleteUser = async (userId) => {
-    if (window.confirm('Are you sure you want to delete this user?')) {
-      try {
-        await axios.delete(`${url}/api/admin/users/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('admintoken')}`,
-          },
-        });
-        setUserData(userData.filter(user => user._id !== userId));
-        toast.success('User deleted successfully!');
-      } catch (error) {
-        console.error('Error deleting user:', error);
-        toast.error('Error deleting user: ' + error.message);
+    // SweetAlert confirmation prompt
+    MySwal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios.delete(`${url}/api/admin/users/${userId}`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('admintoken')}`,
+            },
+          });
+          setUserData(userData.filter(user => user._id !== userId));
+          toast.success('User deleted successfully!');
+  
+          // SweetAlert success notification
+          MySwal.fire(
+            'Deleted!',
+            'User has been deleted.',
+            'success'
+          );
+        } catch (error) {
+          console.error('Error deleting user:', error);
+          toast.error('Error deleting user: ' + error.message);
+  
+          // SweetAlert error notification
+          MySwal.fire(
+            'Error!',
+            'There was an error deleting the user.',
+            'error'
+          );
+        }
       }
-    }
+    });
   };
-
+  
 
 
   const handleLogout = () => {
