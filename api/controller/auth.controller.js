@@ -6,16 +6,11 @@ import jwt from 'jsonwebtoken';
 
 
 
-// Password validation regex
 const passwordValidationRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-// Email validation regex
 const emailValidationRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const signup = async (req, res, next) => { 
   const { username, email, password } = req.body;
-
-  // Simple validation for missing fields
   if (!username || !email || !password) {
     return res.status(400).json({ 
       success: false,
@@ -27,8 +22,6 @@ export const signup = async (req, res, next) => {
       }
     });
   }
-
-  // Password validation
   if (!passwordValidationRegex.test(password)) {
     return res.status(400).json({
       success: false,
@@ -38,8 +31,6 @@ export const signup = async (req, res, next) => {
       }
     });
   }
-
-  // Email validation
   if (!emailValidationRegex.test(email)) {
     return res.status(400).json({
       success: false,
@@ -49,14 +40,12 @@ export const signup = async (req, res, next) => {
       }
     });
   }
-
   try {
     const hashedPassword = bcryptjs.hashSync(password, 10);
     const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
     res.status(201).json({ success: true, message: "User created successfully!" });
   } catch (error) {
-    // Handle errors, e.g. unique constraint violation
     if (error.code === 11000) {
       return res.status(400).json({ 
         success: false,
@@ -71,10 +60,10 @@ export const signup = async (req, res, next) => {
 };
 
 
+
+
 export const signin = async (req, res, next) => {
   const { email, password } = req.body;
-
-  // Basic validation for missing fields
   if (!email || !password) {
       return res.status(400).json({
           success: false,
@@ -85,8 +74,6 @@ export const signin = async (req, res, next) => {
           }
       });
   }
-
-  // Validate email format
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailPattern.test(email)) {
       return res.status(400).json({
@@ -95,22 +82,17 @@ export const signin = async (req, res, next) => {
           errors: { email: 'Email is not valid' }
       });
   }
-
   try {
       const validUser = await User.findOne({ email });
       if (!validUser) return next(errorHandler(404, 'User not found'));
-
       const validPassword = bcryptjs.compareSync(password, validUser.password);
       if (!validPassword) return next(errorHandler(401, 'Wrong credentials'));
-
       const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
       const { password: hashedPassword, ...rest } = validUser._doc;
       const expiryDate = new Date(Date.now() + 3600000); // 1 hour
-
       res.cookie('access_token', token, { httpOnly: true, expires: expiryDate })
           .status(200)
           .json({ success: true, message: "Sign in successful!", ...rest });
-
   } catch (error) {
       next(error);
   }
@@ -140,6 +122,7 @@ export const google = async(req,res,next) => {
     next(error)
   }
 }
+
 
 export const signout = (req,res)=>{
   res.clearCookie('access_token').status(200).json('Signout success')
