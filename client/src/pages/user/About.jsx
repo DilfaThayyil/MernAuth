@@ -6,7 +6,6 @@ export default function About() {
       <h1 className='text-4xl font-bold mb-6 text-center text-gray-800'>🌟 About This Amazing App</h1>
       <p className='mb-4 text-gray-700'>
         Hey there! Welcome to our little corner of the web, where we’ve crafted a cool MERN stack application just for you.
-        Think of it as your digital playground—easy sign-ups, smooth logins, and all the secure features you need to explore!
       </p>
       <p className='mb-4 text-gray-700'>
         Built on the powerful <strong>MERN stack</strong> (that’s MongoDB, Express, React, and Node.js), this app is designed to
@@ -22,7 +21,7 @@ export default function About() {
         starting point. Feel free to tinker, experiment, and make it your own. It’s all about creativity and learning!
       </p>
       <p className='text-gray-700 text-center italic'>
-        Ready to embark on this journey? Let’s get started! 🚀
+        Ready? Let’s get started!🤞
       </p>
     </div>
   );
