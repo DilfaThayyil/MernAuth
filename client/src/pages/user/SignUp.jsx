@@ -53,7 +53,7 @@ export default function SignUp() {
           type="text" 
           placeholder='Username' 
           id='username' 
-          className={`bg-slate-100 p-3 rounded-lg ${errors.username ? 'border-red-500' : ''}`} 
+          className={`bg-red-100 p-3 rounded-lg ${errors.username ? 'border-red-500' : ''}`} 
           onChange={handleChange}
         />
         {errors.username && <p className='text-red-500'>{errors.username}</p>}
@@ -62,7 +62,7 @@ export default function SignUp() {
           type="email" 
           placeholder='Email' 
           id='email' 
-          className={`bg-slate-100 p-3 rounded-lg ${errors.email ? 'border-red-500' : ''}`} 
+          className={`bg-red-100 p-3 rounded-lg ${errors.email ? 'border-red-500' : ''}`} 
           onChange={handleChange}
         />
         {errors.email && <p className='text-red-500'>{errors.email}</p>}
@@ -71,12 +71,12 @@ export default function SignUp() {
           type="password" 
           placeholder='Password' 
           id='password' 
-          className={`bg-slate-100 p-3 rounded-lg ${errors.password ? 'border-red-500' : ''}`} 
+          className={`bg-red-100 p-3 rounded-lg ${errors.password ? 'border-red-500' : ''}`} 
           onChange={handleChange}
         />
         {errors.password && <p className='text-red-500'>{errors.password}</p>}
 
-        <button disabled={loading} className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>
+        <button disabled={loading} className='bg-red-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>
           {loading ? 'Loading...' : 'Sign Up'}
         </button>
       </form>
@@ -84,7 +84,7 @@ export default function SignUp() {
       <div className='flex gap-2 mt-5'>
         <p>Have an account?</p>
         <Link to='/sign-in'>
-          <span className='text-blue-500'>Sign in</span>
+          <span className='text-red-500'>Sign in</span>
         </Link>
       </div>
 

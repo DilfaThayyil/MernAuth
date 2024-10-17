@@ -155,7 +155,7 @@ export default function AdminDashboard() {
               {userData.map((user) => (
                 <tr key={user._id} className="hover:bg-gray-50">
                   <td className="border-b px-4 py-2">
-                    <img src={user.profilePicture} className="w-12 h-12 rounded-full" />
+                    <img src={user.profilePicture} alt='profile image' className="w-12 h-12 rounded-full object-cover" />
                   </td>
                   <td className="border-b px-4 py-2">{user.username}</td>
                   <td className="border-b px-4 py-2">{user.email}</td>
