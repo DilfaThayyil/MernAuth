@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -10,7 +10,7 @@ import withReactContent from 'sweetalert2-react-content';
 
 const MySwal = withReactContent(Swal);
 
-const url = 'http://localhost:3000';
+const url = `${import.meta.env.VITE_BACKEND_BASEURL}`;
 
 export default function AdminDashboard() {
   const [userData, setUserData] = useState([]);

@@ -1,9 +1,9 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminLogin.css';
 
-const url = `http://localhost:3000/api/`;
+const url = `${import.meta.env.VITE_BACKEND_BASEURL}/api/`;
 
 function AdminLogin() {
     const [email, setEmail] = useState('');
