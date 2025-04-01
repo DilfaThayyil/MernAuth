@@ -12,7 +12,8 @@ import { updateUserStart,
   signOut
  } from '../../redux/user/userSlice'
 
-const url = `${import.meta.env.VITE_BACKEND_BASEURL}`;
+// const url = `${import.meta.env.VITE_BACKEND_BASEURL}`;
+const url = 'https://mernauth-ozuz.onrender.com'
 
 
 export default function Profile() {
