@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminLogin.css';
 
-const url = `${import.meta.env.VITE_BACKEND_BASEURL}/api/`;
+const url = `${import.meta.env.VITE_BACKEND_BASEURL}/api`;
 
 function AdminLogin() {
     const [email, setEmail] = useState('');
@@ -39,7 +39,7 @@ function AdminLogin() {
         };
 
         try {
-            const response = await axios.post(`${url}admin/login`, adminData);
+            const response = await axios.post(`${url}/admin/login`, adminData);
 
             if (response.data.success) {
                 setIsError(false);
