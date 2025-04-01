@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import OAuth from '../../components/OAuth'
 
+const url = `${import.meta.env.VITE_BACKEND_BASEURL}`;
+
 export default function SignUp() {
   const [formData, setFormData] = useState({
     username: '',
@@ -23,7 +25,7 @@ export default function SignUp() {
     setSuccessMessage('')
     try {
       setLoading(true);
-      const res = await fetch('/api/auth/signup', {
+      const res = await fetch(`${url}/api/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
