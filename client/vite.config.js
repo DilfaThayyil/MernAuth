@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://mern-auth-aj3j.onrender.com',
+        target: 'https://mernauth-ozuz.onrender.com',
         secure: false
       }
     }
